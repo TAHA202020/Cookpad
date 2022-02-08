@@ -1,9 +1,8 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
     String name;
-    List<Ingredient> ingredients=new ArrayList<>();
+    List<Ingredient> ingredients;
     public Recipe(String name,List<Ingredient> ingredients)
     {
         this.name=name;

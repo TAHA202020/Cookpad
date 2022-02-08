@@ -1,6 +1,5 @@
 import org.json.simple.*;
 import utils.utilsme;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +50,6 @@ public class App {
                 String sout1 =object.get("original").toString();
                 Ingredient ingredient =new Ingredient(sout1);
                 ingredients.add(ingredient);
-
             }
             Recipe recipe =new Recipe(name,ingredients);
             favorite.add(recipe);

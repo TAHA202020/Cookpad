@@ -14,4 +14,16 @@ public class Favorite {
     {
         recipes.add(addin);
     }
+    public void remove(int index)
+    {
+        recipes.remove(index);
+    }
+    public void string()
+    {
+        for (int i=0;i<recipes.size();i++)
+        {
+            System.out.println(recipes.get(i).name);
+        }
+        System.out.println("-------------------------");
+    }
 }

@@ -1,15 +1,12 @@
 package foodapp.utils;
-
 import foodapp.ApiCall;
 import foodapp.Ingredient;
 import foodapp.Recipe;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 public class utilsme {
     public static int response(int size)
     {
@@ -71,8 +68,9 @@ public class utilsme {
                         String step = object.getString("step");
                         stepss.add(step);
                     }
-                stepslist.add(stepss);
             }
+            stepslist.add(stepss);
+
         }
         for (int j=0;j<recipes.size();j++)
         {
@@ -93,17 +91,5 @@ public class utilsme {
         addIngredients(result);
         addInstrctions(result);
         return result;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        ApiCall apiCall=new ApiCall();
-        List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe("pasta",20,1));
-        for (int index=0;index<recipes.size();index++)
-        {
-            recipes.get(index).string();
-        }
-        if (recipes.size()==0)
-            System.out.println("No recipes that has that name");
     }
 }

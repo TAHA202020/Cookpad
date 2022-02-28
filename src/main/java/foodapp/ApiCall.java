@@ -6,12 +6,12 @@ import java.net.URLConnection;
 
 public class ApiCall
 {
-    String query="";
+    public String query="";
     final String ingredientsbyID="/ingredientWidget.json?";
     final String baseUrl="https://api.spoonacular.com/recipes/";
     final String urlRecipe="complexSearch?";
     final String instructionUrl="/analyzedInstructions?";
-    final String apiKey="apiKey=054b79ccf9ee4063874b047b6fe171a0";
+    final String apiKey="apiKey=124799579aaf48ff91a81a76bd427758";
     public ApiCall()
     {}
     private String Call(String callurl) throws Exception

@@ -1,11 +1,13 @@
 package foodapp;
-import foodapp.utils.utilsme;
 import org.json.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static foodapp.utils.utilsme.getRecipes;
+import static foodapp.utils.utilsme.response;
+
 public class App {
-    JsonReader jsonReader=new JsonReader("findByIngredients.json");
+    /*JsonReader jsonReader=new JsonReader("findByIngredients.json");
     private int choosen;
     private Favorite favorite=new Favorite();
     public int showRecipes() throws JSONException {
@@ -18,7 +20,7 @@ public class App {
             System.out.println((jsonArray.getJSONObject(index)).getString("title"));
         }
         System.out.println("press 0 to end APP");
-        int response= foodapp.utils.utilsme.response(jsonArray.length());
+        int response= response(jsonArray.length());
         if (response==0)
         {
             return 2;
@@ -37,7 +39,7 @@ public class App {
         System.out.println("1-to add to favorite");
         System.out.println("2-show favorite recipes");
         System.out.println("3-end app");
-        int response1 = utilsme.response(4);
+        int response1 = response(4);
         if (response1==1)
         {
             List<Ingredient> ingredients =new ArrayList<>();
@@ -77,7 +79,7 @@ public class App {
         System.out.println("press");
         System.out.println("1- show all recipes");
         System.out.println("2-end app");
-        int response = utilsme.response(3);
+        int response = response(3);
         if (response==1)
         {
             return 0;
@@ -97,11 +99,17 @@ public class App {
             response=showFavorites();
             launch(response);
         }
-    }
+    }*/
 
-    public static void main(String[] args) throws JSONException {
-        App app=new App();
-        app.launch(0);
+    public static void main(String[] args) throws Exception {
+        ApiCall apiCall=new ApiCall();
+        List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(6,1));
+        for (int index=0;index<recipes.size();index++)
+        {
+            recipes.get(index).string();
+        }
+        if (recipes.size()==0)
+            System.out.println("No recipes that has that name");
     }
 
 }

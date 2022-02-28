@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 
 public class FoodApp extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/app/foodapp/view/foodapp.fxml"));

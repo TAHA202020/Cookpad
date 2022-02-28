@@ -26,4 +26,8 @@ public class Favorite {
         }
         System.out.println("-------------------------");
     }
+    public Recipe get(int index)
+    {
+        return recipes.get(index);
+    }
 }

@@ -3,6 +3,7 @@ import foodapp.controller.FoodAppController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -79,6 +80,7 @@ public class Recipe {
         imageView.setFitWidth(300);
         imageView.setFitHeight(300);
         HBox hBox =new HBox();
+        Label label=new Label(this.name);
         hBox.setPadding(new Insets(10,0,0,0));
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(40);
@@ -94,6 +96,7 @@ public class Recipe {
             FoodAppController.favorite.string();
         }));
         result.getChildren().add(imageView);
+        result.getChildren().add(label);
         result.getChildren().add(hBox);
         result.getStyleClass().add("item");
         return result;

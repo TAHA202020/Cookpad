@@ -27,6 +27,8 @@ public class FoodAppController implements Initializable {
     ApiCall apiCall=new ApiCall();
     boolean open=false;
     @FXML
+    AnchorPane fullrecipe;
+    @FXML
     AnchorPane favoritepane;
     @FXML
     ScrollPane scrollPane;
@@ -44,17 +46,20 @@ public class FoodAppController implements Initializable {
     {
         if (!open)
         {
-            scrollPane.setVisible(false);
-            favoritepane.setVisible(true);
             imageView.setImage(new Image("file:src/main/resources/app/foodapp/view/img/onclickpic.png"));
             open=true;
+            vBox.getChildren().clear();
+            for (int i=0;i<favorite.recipes().size();i++)
+            {
+                 vBox.getChildren().add(favorite.get(i).vBox());
+            }
         }
         else
         {
-            scrollPane.setVisible(true);
-            favoritepane.setVisible(false);
             imageView.setImage(new Image("file:src/main/resources/app/foodapp/view/img/heart.png"));
             open=false;
+            vBox.getChildren().clear();
+            loadmore();
         }
     }
     @FXML
@@ -146,7 +151,7 @@ public class FoodAppController implements Initializable {
     @FXML
     public void onScroll()
     {
-        if (scrollPane.getVvalue()==scrollPane.getVmax())
+        if (scrollPane.getVvalue()==scrollPane.getVmax()&& !open)
         {
             loadmore();
         }
@@ -158,8 +163,6 @@ public class FoodAppController implements Initializable {
         offset=0;
         loadmore();
     }
-
-
     public void initialize(URL location, ResourceBundle resourceBundle)
     {
         try {

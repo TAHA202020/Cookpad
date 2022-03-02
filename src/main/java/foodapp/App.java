@@ -3,8 +3,7 @@ import org.json.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static foodapp.utils.utilsme.getRecipes;
-import static foodapp.utils.utilsme.response;
+import static foodapp.utils.utilsme.*;
 
 public class App {
     /*JsonReader jsonReader=new JsonReader("findByIngredients.json");
@@ -102,14 +101,11 @@ public class App {
     }*/
 
     public static void main(String[] args) throws Exception {
-        ApiCall apiCall=new ApiCall();
-        List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(6,1));
-        for (int index=0;index<recipes.size();index++)
+        List<Recipe> recipes=getRecipes();
+        for (int i=0;i<recipes.size();i++)
         {
-            recipes.get(index).string();
+            recipes.get(i).string();
         }
-        if (recipes.size()==0)
-            System.out.println("No recipes that has that name");
     }
 
 }

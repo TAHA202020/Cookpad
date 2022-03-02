@@ -1,13 +1,18 @@
 package foodapp.utils;
-import foodapp.ApiCall;
 import foodapp.Ingredient;
 import foodapp.Recipe;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class utilsme {
+    public static String callUrl="https://api.spoonacular.com/recipes/random?apiKey=21352ca9ce914aa9bb9edc844b172445&number=100";
     public static int response(int size)
     {
 
@@ -27,69 +32,66 @@ public class utilsme {
             return response(size);
         }
     }
-    public static void addIngredients(List<Recipe> recipes) throws Exception {
-        ApiCall apiCall=new ApiCall();
-        for (int index=0;index<recipes.size();index++)
+    public static String Call(String callurl) throws Exception
+    {
+        URL url = new URL(callurl);
+        URLConnection connection = url.openConnection();
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream())))
         {
+            String line;
+            if ((line = in.readLine()) != null) {
+                return line;
+            }
+            else return "something went wrong";
+        }
+    }
+
+    public static List<Recipe> getRecipes() throws Exception
+    {
+        String response = Call(callUrl);
+        List<Recipe> result=new ArrayList<>();
+        JSONObject jsonObject=new JSONObject(response);
+        JSONArray recipes=jsonObject.getJSONArray("recipes");
+        for (int i=0;i<recipes.length();i++)
+        {
+            JSONObject object=recipes.getJSONObject(i);
+            int id=object.getInt("id");
+            String image="https://spoonacular.com/recipeImages/"+id+"-312x231.jpg";
+            String name=object.getString("title");
+            boolean vegan=object.getBoolean("vegan");
+            boolean cheap=object.getBoolean("cheap");
+            boolean veryPopular= object.getBoolean("veryPopular");
+            boolean veryHealthy= object.getBoolean("veryHealthy");
+            JSONArray extendedIngredients=object.getJSONArray("extendedIngredients");
             List<Ingredient> ingredients=new ArrayList<>();
-            int id = recipes.get(index).getId();
-            String result= apiCall.ApiCallurlinGredients(id);
-            JSONObject jsonObject=new JSONObject(result);
-            JSONArray jsonArray =jsonObject.getJSONArray("ingredients");
-            for (int index2=0;index2<jsonArray.length();index2++)
+            for (int j=0;j<extendedIngredients.length();j++)
             {
-                JSONObject jsonObject1= jsonArray.getJSONObject(index2);
-                String name= jsonObject1.getString("name");
-                JSONObject amount1=jsonObject1.getJSONObject("amount");
-                JSONObject amount2=amount1.getJSONObject("metric");
-                String amount = amount2.getInt("value")+" "+ amount2.getString("unit");
-                Ingredient ingredient=new Ingredient(name,amount);
+                JSONObject ingredientsplus=extendedIngredients.getJSONObject(j);
+                Ingredient ingredient=new Ingredient(ingredientsplus.getString("original"));
                 ingredients.add(ingredient);
             }
-            recipes.get(index).setIngredients(ingredients);
-        }
-    }
-    public static void addInstrctions(List<Recipe> recipes) throws Exception {
-        ApiCall apiCall=new ApiCall();
-        List<List<String>> stepslist=new ArrayList<>();
-        for (int i =0;i<recipes.size();i++)
-        {
-            List<String> stepss=new ArrayList<>();
-            int id = recipes.get(i).getId();
-            String result=apiCall.ApiCallurlInstruction(id);
-            JSONArray jsonArray=new JSONArray(result);
-            for (int index1=0;index1< jsonArray.length();index1++)
+            List<String> cuisines=new ArrayList<>();
+            JSONArray cuisinesplus= object.getJSONArray("cuisines");
+            for (int k=0;k<cuisinesplus.length();k++)
             {
-                JSONObject jsonObject= jsonArray.getJSONObject(index1);
-                JSONArray steps=jsonObject.getJSONArray("steps");
-                for (int index=0;index<steps.length();index++)
-                    {
-                        JSONObject object=steps.getJSONObject(index);
-                        String step = object.getString("step");
-                        stepss.add(step);
-                    }
+                cuisines.add(cuisinesplus.getString(k));
             }
-            stepslist.add(stepss);
-
-        }
-        for (int j=0;j<recipes.size();j++)
-        {
-            recipes.get(j).setInstructions(stepslist.get(j));
-        }
-
-    }
-    public static List<Recipe> getRecipes(String jsononbject) throws Exception {
-        List<Recipe> result=new ArrayList<>();
-        JSONObject jsonObject= new JSONObject(jsononbject);
-        JSONArray jsonArray=jsonObject.getJSONArray("results");
-        for (int i=0;i<jsonArray.length();i++)
-        {
-            JSONObject jsonObject1=  jsonArray.getJSONObject(i);
-            Recipe recipe=new Recipe(jsonObject1.getString("title"), jsonObject1.getInt("id"),jsonObject1.getString("image"));
+            JSONArray analyzedInstr= object.getJSONArray("analyzedInstructions");
+            List<String> instructions=new ArrayList<>();
+            for (int l=0;l<analyzedInstr.length();l++)
+            {
+                JSONObject instru=analyzedInstr.getJSONObject(l);
+                JSONArray steps=instru.getJSONArray("steps");
+                for (int m=0;m<steps.length();m++)
+                {
+                    String step=steps.getJSONObject(m).getString("step");
+                    instructions.add(step);
+                }
+            }
+            Recipe recipe=new Recipe(name,ingredients,instructions,cuisines,image,id,vegan,cheap,veryHealthy,veryPopular);
             result.add(recipe);
         }
-        addIngredients(result);
-        addInstrctions(result);
         return result;
     }
 }

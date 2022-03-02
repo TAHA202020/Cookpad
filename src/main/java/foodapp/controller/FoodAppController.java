@@ -1,193 +1,66 @@
 package foodapp.controller;
 import foodapp.*;
+import javafx.animation.ScaleTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import static foodapp.utils.utilsme.getRecipes;
 
 public class FoodAppController implements Initializable {
-    public static Favorite favorite=new Favorite();
-    public static List<Integer> ids=new ArrayList<>();
-    int offset=6;
-    boolean stillSearching =false;
-    ApiCall apiCall=new ApiCall();
-    boolean open=false;
-    @FXML
-    AnchorPane fullrecipe;
-    @FXML
-    AnchorPane favoritepane;
-    @FXML
-    ScrollPane scrollPane;
     @FXML
     TextField textField;
     @FXML
-    Button searchbtn;
+    AnchorPane searchAnchor;
     @FXML
-    VBox vBox;
+    Button closesearchbtn;
     @FXML
-    ImageView imageView;
-
-    @FXML
-    void changeFavoriteIcone()
+    void stopsearching()
     {
-        if (!open)
+        if (textField.getText()=="")
         {
-            imageView.setImage(new Image("file:src/main/resources/app/foodapp/view/img/onclickpic.png"));
-            open=true;
-            vBox.getChildren().clear();
-            for (int i=0;i<favorite.recipes().size();i++)
-            {
-                 vBox.getChildren().add(favorite.get(i).vBox());
-            }
+            searchAnchor.setScaleX(0);
+            searchAnchor.setScaleY(0);
         }
         else
-        {
-            imageView.setImage(new Image("file:src/main/resources/app/foodapp/view/img/heart.png"));
-            open=false;
-            vBox.getChildren().clear();
-            loadmore();
-        }
+            textField.setText("");
     }
     @FXML
-    void search()
+    void insideButton(MouseEvent e)
     {
-        stillSearching=true;
-        offset=0;
-        vBox.getChildren().clear();
-        try {
-            int count=0;
-            List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(textField.getText(),6,offset));
-            for (int j=0;j<9&& count<recipes.size();j++)
-            {
-                HBox hBox=new HBox();
-                hBox.setAlignment(Pos.CENTER);
-                hBox.setSpacing(100);
-                hBox.setMinHeight(406);
-                hBox.setPrefWidth(406);
-                for (int i=0;i<3 && count<recipes.size() ;i++)
-                {
-                    hBox.getChildren().add(recipes.get(count).vBox());
-                    count++;
-                }
-                vBox.getStyleClass().add("container");
-                vBox.getChildren().add(hBox);
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-    }
-    public void loadmore()
-    {
-        if (stillSearching)
-        {
-            System.out.println(apiCall.query);
-            try {
-                int count=0;
-                List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(apiCall.query,6,offset));
-                for (int j=0;j<9&& count<recipes.size();j++)
-                {
-                    HBox hBox=new HBox();
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setSpacing(100);
-                    hBox.setMinHeight(406);
-                    hBox.setPrefWidth(406);
-                    for (int i=0;i<3 && count<recipes.size() ;i++)
-                    {
-                        hBox.getChildren().add(recipes.get(count).vBox());
-                        count++;
-                    }
-                    vBox.getStyleClass().add("container");
-                    vBox.getChildren().add(hBox);
-                }
-            }catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            try {
-                int count=0;
-                List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(6,offset));
-                for (int j=0;j<9&& count<recipes.size();j++)
-                {
-                    HBox hBox=new HBox();
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setSpacing(100);
-                    hBox.setMinHeight(406);
-                    hBox.setPrefWidth(406);
-                    for (int i=0;i<3 && count<recipes.size() ;i++)
-                    {
-                        hBox.getChildren().add(recipes.get(count).vBox());
-                        count++;
-                    }
-                    vBox.getStyleClass().add("container");
-                    vBox.getChildren().add(hBox);
-                }
-            }catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        offset+=6;
-
+        Button btn =(Button) e.getSource();
+        ScaleTransition scaleTransition=new ScaleTransition(Duration.seconds(0.1),btn);
+        scaleTransition.setToY(1.1);
+        scaleTransition.setToX(1.1);
+        scaleTransition.play();
     }
     @FXML
-    public void onScroll()
+    void LeaveButton(MouseEvent e)
     {
-        if (scrollPane.getVvalue()==scrollPane.getVmax()&& !open)
-        {
-            loadmore();
-        }
+        Button btn=(Button) e.getSource();
+        ScaleTransition scaleTransition=new ScaleTransition(Duration.seconds(0.1),btn);
+        scaleTransition.setToY(1);
+        scaleTransition.setToX(1);
+        scaleTransition.play();
     }
     @FXML
-    public void Homebtn()
+    void startSearch()
     {
-        vBox.getChildren().clear();
-        offset=0;
-        loadmore();
+        ScaleTransition scaleTransition=new ScaleTransition(Duration.seconds(0.2),searchAnchor);
+        scaleTransition.setToY(1);
+        scaleTransition.setToX(1);
+        scaleTransition.play();
     }
     public void initialize(URL location, ResourceBundle resourceBundle)
     {
-        try {
-            int count=0;
-            List<Recipe> recipes=getRecipes(apiCall.ApiCallurlRecipe(6,offset));
-            for (int j=0;j<9&& count<recipes.size();j++)
-            {
-                HBox hBox=new HBox();
-                hBox.setAlignment(Pos.CENTER);
-                hBox.setSpacing(100);
-                hBox.setMinHeight(406);
-                hBox.setPrefWidth(406);
-                for (int i=0;i<3 && count<recipes.size() ;i++)
-                {
-                    hBox.getChildren().add(recipes.get(count).vBox());
-                    count++;
-                }
-                vBox.getStyleClass().add("container");
-                vBox.getChildren().add(hBox);
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        offset+=6;
     }
 }
 

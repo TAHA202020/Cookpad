@@ -1,75 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-.root
+.searchbtn
 {
--fx-font-family: 'Comfortaa', cursive;
+-fx-background-color: #f5f5f5;
+-fx-background-radius:12px;
+-fx-border-radius:12px;
 }
-.container
+.searchbtn:hover
 {
--fx-background-color:#51D6FF;
+-fx-background-color: #E1E1E1;
 }
-.favorite
+.homebtn
 {
--fx-height:10px;
--fx-width:10px;
--fx-background-radius:50%;
+-fx-background-color:none;
+-fx-border-width:0 0 3px 0;
 }
-.navbar
-{
--fx-background-color:#37FF8B;
-}
-.text
-{
--fx-background-color: transparent;
--fx-border-width:0px 0px 3px 0px;
--fx-border-color:blue;
-}
-.text:focused
+.homebtn:focused
 {
 -fx-border-color:red;
 }
-.search
+.homebtn:hover
 {
--fx-border-width:1px 1px 1px 1px;
 -fx-border-color:black;
-}
-.item
-{
--fx-border-width:0.5px;
--fx-background-radius:8px;
--fx-background-color:#522B29;
- -fx-border-radius: 8px;
- -fx-border-color: black;
--fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
-}
-.item:hover
-{
--fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.8, 0.0, 0.0);
-}
-.custombut {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
-    -fx-border-width: 2;
-    -fx-background-radius: 0;
-    -fx-background-color: #522B29;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
-    -fx-background-insets: 0 0 0 0, 0, 1, 2;
-}
-
-.custombut:hover {
-    -fx-background-color: #3a3a3a;
-}
-
-.custombut:pressed, .custombut:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
-}
-
-.custombut:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
 }

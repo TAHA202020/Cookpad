@@ -14,11 +14,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
+    boolean vegan;
+    boolean cheap;
+    boolean veryPopular;
+    boolean veryHealthy;
+    List<String> cuisines=new ArrayList<>();
     List<String> instructions=new ArrayList<>();
     int id;
     String image;
     public String name;
     List<Ingredient> ingredients;
+    public Recipe(String name,List<Ingredient> ingredients,List<String> instructions,List<String> cuisines,String image,int id,boolean vegan,boolean cheap,boolean veryHealthy,boolean veryPopular)
+    {
+        this.id=id;
+        this.instructions=instructions;
+        this.ingredients=ingredients;
+        this.cuisines=cuisines;
+        this.name=name;
+        this.image= image;
+        this.vegan=vegan;
+        this.cheap=cheap;
+        this.veryHealthy=veryHealthy;
+        this.veryPopular=veryPopular;
+    }
+
     public Recipe(String name,List<Ingredient> ingredients)
     {
         this.name=name;
@@ -55,7 +74,7 @@ public class Recipe {
     }
     public void string()
     {
-        System.out.println("Id:"+id+"\n"+"Name:"+name+"\n"+"Ingredients:");
+        System.out.println("Id:"+id+"\n"+"Name:"+name+"\n"+"Image:"+image+"\n"+"Ingredients:");
         for (int i=0;i<ingredients.size();i++)
         {
             System.out.print(ingredients.get(i).ingredient+"\n");
@@ -66,39 +85,17 @@ public class Recipe {
             System.out.println(step);
         }
     }
-    public VBox vBox()
+    public void String()
     {
-        Button btn=new Button("Add To Fav");
-        Button btn1=new Button("See Full Recipe");
-        btn.getStyleClass().add("custombut");
-        btn1.getStyleClass().add("custombut");
-        VBox result =new VBox();
-        result.setAlignment(Pos.TOP_CENTER);
-        result.setPrefHeight(406);
-        result.setPrefWidth(332);
-        ImageView imageView =new ImageView(new Image(image));
-        imageView.setFitWidth(300);
-        imageView.setFitHeight(300);
-        HBox hBox =new HBox();
-        Label label=new Label(this.name);
-        hBox.setPadding(new Insets(10,0,0,0));
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(40);
-        hBox.getChildren().add(btn);
-        hBox.getChildren().add(btn1);
-        btn.setOnAction((event ->
-        {
-            if (!FoodAppController.ids.contains(this.id))
-            {
-                FoodAppController.favorite.add(this);
-                FoodAppController.ids.add(this.id);
-            }
-            FoodAppController.favorite.string();
-        }));
-        result.getChildren().add(imageView);
-        result.getChildren().add(label);
-        result.getChildren().add(hBox);
-        result.getStyleClass().add("item");
-        return result;
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(image);
+        System.out.println(cheap);
+        System.out.println(veryHealthy);
+        System.out.println(veryPopular);
+        System.out.println(vegan);
+        System.out.println("----------------------");
+
     }
+
 }

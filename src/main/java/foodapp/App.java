@@ -104,7 +104,7 @@ public class App {
         List<Recipe> recipes=getRecipes();
         for (int i=0;i<recipes.size();i++)
         {
-            recipes.get(i).string();
+            recipes.get(i).String();
         }
     }
 

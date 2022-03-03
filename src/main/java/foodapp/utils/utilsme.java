@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class utilsme {
-    public static String callUrl="https://api.spoonacular.com/recipes/random?apiKey=21352ca9ce914aa9bb9edc844b172445&number=100";
+    public static String callUrl="https://api.spoonacular.com/recipes/random?apiKey=bed0513a097d414ea107b26908404df0&number=100";
     public static int response(int size)
     {
 
@@ -58,6 +58,8 @@ public class utilsme {
             JSONObject object=recipes.getJSONObject(i);
             int id=object.getInt("id");
             String image="https://spoonacular.com/recipeImages/"+id+"-312x231.jpg";
+            int price=object.getInt("pricePerServing");
+            int time=object.getInt("readyInMinutes");
             String name=object.getString("title");
             boolean vegan=object.getBoolean("vegan");
             boolean cheap=object.getBoolean("cheap");
@@ -89,7 +91,7 @@ public class utilsme {
                     instructions.add(step);
                 }
             }
-            Recipe recipe=new Recipe(name,ingredients,instructions,cuisines,image,id,vegan,cheap,veryHealthy,veryPopular);
+            Recipe recipe=new Recipe(name,ingredients,instructions,cuisines,image,id,vegan,cheap,veryHealthy,veryPopular,time,price);
             result.add(recipe);
         }
         return result;

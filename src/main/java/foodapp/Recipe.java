@@ -1,17 +1,14 @@
 package foodapp;
-import foodapp.controller.FoodAppController;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaMarkerEvent;
-
+import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
+
+import static foodapp.controller.FoodAppController.*;
 
 public class Recipe {
     boolean vegan;
@@ -21,11 +18,15 @@ public class Recipe {
     List<String> cuisines=new ArrayList<>();
     List<String> instructions=new ArrayList<>();
     int id;
+    int time;
+    int price;
     String image;
     public String name;
     List<Ingredient> ingredients;
-    public Recipe(String name,List<Ingredient> ingredients,List<String> instructions,List<String> cuisines,String image,int id,boolean vegan,boolean cheap,boolean veryHealthy,boolean veryPopular)
+    public Recipe(String name,List<Ingredient> ingredients,List<String> instructions,List<String> cuisines,String image,int id,boolean vegan,boolean cheap,boolean veryHealthy,boolean veryPopular,int time,int price)
     {
+        this.price=price;
+        this.time=time;
         this.id=id;
         this.instructions=instructions;
         this.ingredients=ingredients;
@@ -37,7 +38,10 @@ public class Recipe {
         this.veryHealthy=veryHealthy;
         this.veryPopular=veryPopular;
     }
-
+    public String getName()
+    {
+        return name;
+    }
     public Recipe(String name,List<Ingredient> ingredients)
     {
         this.name=name;
@@ -56,10 +60,6 @@ public class Recipe {
         this.image=image;
         this.name=name;
     }
-    public void setIngredients(List<Ingredient>ingredients)
-    {
-        this.ingredients=ingredients;
-    }
     public int getId()
     {
         return id;
@@ -67,10 +67,6 @@ public class Recipe {
     public List<Ingredient> ingredients()
     {
         return ingredients;
-    }
-    public void setInstructions(List<String> instructions)
-    {
-        this.instructions=instructions;
     }
     public void string()
     {
@@ -85,6 +81,39 @@ public class Recipe {
             System.out.println(step);
         }
     }
+    public String getImage()
+    {
+        return image;
+    }
+    public VBox Item()
+    {
+        VBox result=new VBox();
+        result.setPrefWidth(130);
+        result.setPrefHeight(190);
+        result.setMaxSize(130,190);
+        ImageView itemimage=new ImageView(new Image(image));
+        itemimage.setFitHeight(90);
+        itemimage.setFitWidth(110);
+        Label title=new Label(this.name);
+        title.setFont(Font.font("Georgia",12));
+        title.setAlignment(Pos.CENTER);
+        title.setPrefSize(130,60);
+        title.setWrapText(true);
+        Label price=new Label("time: "+this.price);
+        price.setPrefSize(130,20);
+        Label time=new Label("price: "+this.time);
+        time.setAlignment(Pos.CENTER);
+        price.setAlignment(Pos.CENTER);
+        time.setPrefSize(130,20);
+        result.setAlignment(Pos.CENTER);
+        result.getChildren().add(itemimage);
+        result.getChildren().add(title);
+        result.getChildren().add(time);
+        result.getChildren().add(price);
+        result.getStyleClass().add("item");
+        return result;
+    }
+
     public void String()
     {
         System.out.println(id);

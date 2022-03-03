@@ -38,6 +38,22 @@ public class Recipe {
         this.veryHealthy=veryHealthy;
         this.veryPopular=veryPopular;
     }
+    public int getPrice()
+    {
+        return this.price;
+    }
+    public boolean isVeryHealthy()
+    {
+        return veryHealthy;
+    }
+    public int getTime()
+    {
+        return this.time;
+    }
+    public boolean isVeryPopular()
+    {
+        return this.veryPopular;
+    }
     public String getName()
     {
         return name;
@@ -68,6 +84,7 @@ public class Recipe {
     {
         return ingredients;
     }
+    public List<String> getInstructions(){return instructions;}
     public void string()
     {
         System.out.println("Id:"+id+"\n"+"Name:"+name+"\n"+"Image:"+image+"\n"+"Ingredients:");
@@ -99,9 +116,9 @@ public class Recipe {
         title.setAlignment(Pos.CENTER);
         title.setPrefSize(130,60);
         title.setWrapText(true);
-        Label price=new Label("time: "+this.price);
+        Label price=new Label("price: "+((float) this.price/100)+" $");
         price.setPrefSize(130,20);
-        Label time=new Label("price: "+this.time);
+        Label time=new Label("time: "+this.time+" min");
         time.setAlignment(Pos.CENTER);
         price.setAlignment(Pos.CENTER);
         time.setPrefSize(130,20);

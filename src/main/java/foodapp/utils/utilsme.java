@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class utilsme {
-    public static String callUrl="https://api.spoonacular.com/recipes/random?apiKey=bed0513a097d414ea107b26908404df0&number=100";
+    public static String callUrl="https://api.spoonacular.com/recipes/random?apiKey=7e60c57957ad41bfac2e44430e23263b&number=100";
     public static int response(int size)
     {
 

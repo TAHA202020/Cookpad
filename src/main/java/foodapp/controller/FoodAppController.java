@@ -4,6 +4,7 @@ import foodapp.Ingredient;
 import foodapp.Recipe;
 import foodapp.utils.utilsme;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -17,7 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.net.URL;
 import java.util.*;
 
@@ -470,7 +473,7 @@ public class FoodAppController implements Initializable {
             String search=textField.getText();
             for (int i=0;i<recipes.size();i++)
             {
-                if (recipes.get(i).name.toLowerCase().contains(search))
+                if (recipes.get(i).name.toLowerCase().contains(search.toLowerCase()))
                 {
                     Todisplay.add(recipes.get(i));
                     break;
@@ -478,7 +481,7 @@ public class FoodAppController implements Initializable {
                 List<Ingredient> ingredients=recipes.get(i).ingredients();
                 for (int j=0;j<ingredients.size();j++)
                 {
-                    if (ingredients.get(j).getIngredient().toLowerCase().contains(search))
+                    if (ingredients.get(j).getIngredient().toLowerCase().contains(search.toLowerCase()))
                     {
                         Todisplay.add(recipes.get(i));
                         break;
@@ -512,6 +515,16 @@ public class FoodAppController implements Initializable {
         checkBoxprice.setSelected(false);
         checkBoxpop.setSelected(false);
         checkBoxTime.setSelected(false);
+    }
+    @FXML
+    void leavebtn()
+    {
+        Platform.exit();
+    }
+    @FXML
+    void minimize(MouseEvent e)
+    {
+        ((Stage)((Button)e.getSource()).getScene().getWindow()).setIconified(true);
     }
 }
 

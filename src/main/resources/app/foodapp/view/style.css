@@ -49,3 +49,11 @@
 {
 -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
+.leaveminimizebtn
+{
+-fx-background-color:none;
+}
+.leaveminimizebtn:hover
+{
+-fx-background-color:#fc5364;
+}

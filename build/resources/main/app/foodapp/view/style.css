@@ -45,3 +45,7 @@
 
 -fx-background-color: #28a3f4;
 }
+.sc:focused
+{
+-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}

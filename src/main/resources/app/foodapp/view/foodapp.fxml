@@ -32,7 +32,7 @@
                   <Glow />
                </effect>
             </ImageView>
-            <Button graphicTextGap="15.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="135.0" styleClass="homebtn" text="Home">
+            <Button graphicTextGap="15.0" mnemonicParsing="false" onAction="#Homebtn" prefHeight="48.0" prefWidth="135.0" styleClass="homebtn" text="Home">
                <VBox.margin>
                   <Insets left="10.0" top="20.0" />
                </VBox.margin>
@@ -152,13 +152,13 @@
             </Label>
          </children>
       </Pane>
-      <ScrollPane fx:id="scroll1" hbarPolicy="NEVER" layoutX="174.0" layoutY="48.0" prefHeight="540.0" prefWidth="764.0" style="-fx-background-radius: 12px; -fx-border-radius: 12px;" vbarPolicy="NEVER">
+      <ScrollPane fx:id="scroll1" hbarPolicy="NEVER" layoutX="174.0" layoutY="48.0" prefHeight="540.0" prefWidth="764.0" styleClass="sc" vbarPolicy="NEVER">
          <content>
-            <VBox onScroll="#checkv" prefHeight="539.0" prefWidth="765.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 12px;">
+            <VBox onScroll="#checkv" prefHeight="539.0" prefWidth="765.0" spacing="10.0" style="-fx-background-color: white;">
                <children>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="756.0" style="-fx-background-radius: 12px;">
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="756.0">
                      <children>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="756.0" style="-fx-background-color: white; -fx-background-radius: 12px;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="756.0" style="-fx-background-color: white;">
                            <children>
                               <ImageView fitHeight="118.0" fitWidth="201.0" layoutX="50.0" layoutY="-11.0" opacity="0.4" pickOnBounds="true">
                                  <image>
@@ -322,7 +322,7 @@
             </VBox>
          </content>
          <effect>
-            <DropShadow blurType="GAUSSIAN" height="0.24" radius="2.585" width="12.1" />
+            <DropShadow />
          </effect>
       </ScrollPane>
       <ScrollPane fx:id="scroll2" hbarPolicy="NEVER" layoutX="174.0" layoutY="48.0" prefHeight="540.0" prefWidth="764.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0); -fx-background-radius: 70%; -fx-border-radius: 8px;" vbarPolicy="NEVER" visible="false">

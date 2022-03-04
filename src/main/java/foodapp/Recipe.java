@@ -1,8 +1,10 @@
 package foodapp;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import java.util.ArrayList;
@@ -127,6 +129,39 @@ public class Recipe {
         result.getChildren().add(title);
         result.getChildren().add(time);
         result.getChildren().add(price);
+        result.getStyleClass().add("item");
+        return result;
+    }
+    public VBox Item(Button favouritebtn,Button starbtn)
+    {
+        HBox btncountainer=new HBox();
+        btncountainer.setAlignment(Pos.CENTER);
+        btncountainer.getChildren().addAll(favouritebtn,starbtn);
+        btncountainer.setSpacing(10);
+        VBox result=new VBox();
+        result.setPrefWidth(130);
+        result.setPrefHeight(190);
+        result.setMaxSize(130,190);
+        ImageView itemimage=new ImageView(new Image(image));
+        itemimage.setFitHeight(90);
+        itemimage.setFitWidth(110);
+        Label title=new Label(this.name);
+        title.setFont(Font.font("Georgia",12));
+        title.setAlignment(Pos.CENTER);
+        title.setPrefSize(130,60);
+        title.setWrapText(true);
+        Label price=new Label("price: "+((float) this.price/100)+" $");
+        price.setPrefSize(130,20);
+        Label time=new Label("time: "+this.time+" min");
+        time.setAlignment(Pos.CENTER);
+        price.setAlignment(Pos.CENTER);
+        time.setPrefSize(130,20);
+        result.setAlignment(Pos.CENTER);
+        result.getChildren().add(itemimage);
+        result.getChildren().add(title);
+        result.getChildren().add(time);
+        result.getChildren().add(price);
+        result.getChildren().add(btncountainer);
         result.getStyleClass().add("item");
         return result;
     }

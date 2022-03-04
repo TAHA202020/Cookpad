@@ -14,10 +14,6 @@ public class Favorite {
     {
         recipes.add(addin);
     }
-    public void remove(int index)
-    {
-        recipes.remove(index);
-    }
     public void string()
     {
         for (int i=0;i<recipes.size();i++)
@@ -29,5 +25,20 @@ public class Favorite {
     public Recipe get(int index)
     {
         return recipes.get(index);
+    }
+    public boolean contains(Recipe recipe)
+    {
+        return recipes.contains(recipe);
+    }
+    public void remove(int id)
+    {
+        for (int i=0;i<recipes.size();i++)
+        {
+            if (recipes.get(i).getId()==id)
+            {
+                recipes.remove(i);
+                break;
+            }
+        }
     }
 }

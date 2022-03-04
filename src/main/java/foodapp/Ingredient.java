@@ -6,10 +6,6 @@ public class Ingredient {
     {
         this.ingredient=ingredient;
     }
-    public Ingredient(String ingredient,String amount)
-    {
-        this.ingredient=ingredient;
-    }
     public String getIngredient()
     {
         return ingredient;

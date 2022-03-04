@@ -1,14 +1,13 @@
 package foodapp.controller;
+import foodapp.Favorite;
 import foodapp.Ingredient;
 import foodapp.Recipe;
 import foodapp.utils.utilsme;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,15 +18,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import org.w3c.dom.ls.LSInput;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 
 public class FoodAppController implements Initializable {
+    List<Recipe> Todisplay=new ArrayList<>();
+    boolean searching=false;
     boolean textfieldshown=false;
+    List<Recipe> saved=new ArrayList<>();
+    Favorite favorite=new Favorite();
     List<Recipe> recipes;
     Label requirementslabl=new Label();
     Label instructionslabl=new Label();
@@ -153,7 +153,7 @@ public class FoodAppController implements Initializable {
     }
     void displayRecipes(List<Recipe> recipes)
     {
-        for (int j=0;j<20&&j<recipes.size();j+=4)
+        for (int j=0;j<12&&j<recipes.size();j+=4)
         {
             HBox hBox =new HBox();
             hBox.setAlignment(Pos.CENTER);
@@ -163,7 +163,56 @@ public class FoodAppController implements Initializable {
             for (int i=j;i<j+4&& i<recipes.size();i++)
             {
                 int k=i;
-                VBox item=recipes.get(i).Item();
+                Image save=new Image("file:src/main/resources/app/foodapp/view/img/star.png");
+                Image favourite=new Image("file:src/main/resources/app/foodapp/view/img/save-instagram.png");
+                Image unsave=new Image("file:src/main/resources/app/foodapp/view/img/minus.png");
+                Image unfavourite=new Image("file:src/main/resources/app/foodapp/view/img/bookmark.png");
+                ImageView saveimg=new ImageView(save);
+                ImageView favouriteimg=new ImageView(favourite);
+                favouriteimg.setFitHeight(15);
+                favouriteimg.setFitWidth(15);
+                saveimg.setFitHeight(15);
+                saveimg.setFitWidth(15);
+                Button btnstart=new Button();
+                Button btn=new Button();
+                btnstart.getStyleClass().add("searchbtn");
+                btn.getStyleClass().add("searchbtn");
+                btn.setGraphic(favouriteimg);
+                btnstart.setGraphic(saveimg);
+                btn.setOnAction(event ->
+                {
+                    if (!favorite.contains(recipes.get(k)))
+                    {
+                        favorite.add(recipes.get(k));
+                        favouriteimg.setImage(unfavourite);
+                    }
+                    else
+                    {
+                        favorite.remove(recipes.get(k).getId());
+                        favouriteimg.setImage(favourite);
+                    }
+                    favorite.string();
+                });
+                btnstart.setOnAction(event ->
+                {
+                    if (!saved.contains(recipes.get(k)))
+                    {
+                        saved.add(recipes.get(k));
+                        saveimg.setImage(unsave);
+                    }
+                    else
+                    {
+                        saveimg.setImage(save);
+                        for (int l=0;l<saved.size();l++)
+                        {
+                            if (saved.get(l).getId()==recipes.get(k).getId())
+                            {
+                                saved.remove(l);
+                            }
+                        }
+                    }
+                });
+                VBox item=recipes.get(i).Item(btn,btnstart);
                 item.setOnMouseEntered(event ->
                 {
                     VBox vBox=(VBox) event.getSource();
@@ -227,28 +276,56 @@ public class FoodAppController implements Initializable {
         checkBoxprice.setSelected(false);
         mainmenu.getChildren().clear();
         up();
-        if (checkBoxpop.isSelected())
+        if (!searching)
         {
-            List<Recipe> Todisplay=new ArrayList<>();
-            for (int i=0;i<recipes.size();i++)
+            if (checkBoxpop.isSelected())
             {
-                if (recipes.get(i).isVeryPopular())
+                List<Recipe> Todisplay=new ArrayList<>();
+                for (int i=0;i<recipes.size();i++)
                 {
-                    Todisplay.add(recipes.get(i));
+                    if (recipes.get(i).isVeryPopular())
+                    {
+                        Todisplay.add(recipes.get(i));
+                    }
                 }
-            }
-            for (int i=0;i<recipes.size();i++)
-            {
-                if (!Todisplay.contains(recipes.get(i)))
+                for (int i=0;i<recipes.size();i++)
                 {
-                    Todisplay.add(recipes.get(i));
+                    if (!Todisplay.contains(recipes.get(i)))
+                    {
+                        Todisplay.add(recipes.get(i));
+                    }
                 }
-            }
 
-            displayRecipes(Todisplay);
+                displayRecipes(Todisplay);
+            }
+            else
+                displayRecipes(recipes);
         }
         else
-            displayRecipes(recipes);
+        {
+            if (checkBoxpop.isSelected())
+            {
+                List<Recipe> Todisplayy=new ArrayList<>();
+                for (int i=0;i<Todisplay.size();i++)
+                {
+                    if (Todisplay.get(i).isVeryPopular())
+                    {
+                        Todisplayy.add(Todisplay.get(i));
+                    }
+                }
+                for (int i=0;i<Todisplay.size();i++)
+                {
+                    if (!Todisplayy.contains(Todisplay.get(i)))
+                    {
+                        Todisplayy.add(Todisplay.get(i));
+                    }
+                }
+
+                displayRecipes(Todisplayy);
+            }
+            else
+                displayRecipes(Todisplay);
+        }
     }
     @FXML
     void sortByHealth()
@@ -258,28 +335,57 @@ public class FoodAppController implements Initializable {
         checkBoxpop.setSelected(false);
         checkBoxprice.setSelected(false);
         mainmenu.getChildren().clear();
-        if (checkBoxhealthy.isSelected())
+        if (!searching)
         {
-            List<Recipe> Todisplay=new ArrayList<>();
-            for (int i=0;i<recipes.size();i++)
+            if (checkBoxhealthy.isSelected())
             {
-                if (recipes.get(i).isVeryHealthy())
+                List<Recipe> Todisplayy=new ArrayList<>();
+                for (int i=0;i<recipes.size();i++)
                 {
-                    Todisplay.add(recipes.get(i));
+                    if (recipes.get(i).isVeryHealthy())
+                    {
+                        Todisplayy.add(recipes.get(i));
+                    }
                 }
-            }
-            for (int i=0;i<recipes.size();i++)
-            {
-                if (!Todisplay.contains(recipes.get(i)))
+                for (int i=0;i<recipes.size();i++)
                 {
-                    Todisplay.add(recipes.get(i));
+                    if (!Todisplayy.contains(recipes.get(i)))
+                    {
+                        Todisplayy.add(recipes.get(i));
+                    }
                 }
-            }
 
-            displayRecipes(Todisplay);
+                displayRecipes(Todisplayy);
+            }
+            else
+                displayRecipes(recipes);
         }
         else
-            displayRecipes(recipes);
+        {
+            if (checkBoxhealthy.isSelected())
+            {
+                List<Recipe> Todisplayy=new ArrayList<>();
+                for (int i=0;i<Todisplay.size();i++)
+                {
+                    if (Todisplay.get(i).isVeryHealthy())
+                    {
+                        Todisplayy.add(Todisplay.get(i));
+                    }
+                }
+                for (int i=0;i<Todisplay.size();i++)
+                {
+                    if (!Todisplayy.contains(Todisplay.get(i)))
+                    {
+                        Todisplayy.add(Todisplay.get(i));
+                    }
+                }
+
+                displayRecipes(Todisplayy);
+            }
+            else
+                displayRecipes(Todisplay);
+        }
+
     }
     @FXML
     void sortByPrice()
@@ -355,37 +461,57 @@ public class FoodAppController implements Initializable {
     @FXML
     void globalsearch()
     {
+        untag();
+        Todisplay.clear();
         System.out.println(textfieldshown);
         if (textfieldshown && textField.getText()!="")
         {
             mainmenu.getChildren().clear();
-            List<Recipe> Todisplay=new ArrayList<>();
             String search=textField.getText();
             for (int i=0;i<recipes.size();i++)
             {
-                if (recipes.get(i).name.contains(search))
+                if (recipes.get(i).name.toLowerCase().contains(search))
                 {
                     Todisplay.add(recipes.get(i));
                     break;
                 }
-                List<String> instructions=recipes.get(i).getInstructions();
-                for (int j=0;j<instructions.size();j++)
+                List<Ingredient> ingredients=recipes.get(i).ingredients();
+                for (int j=0;j<ingredients.size();j++)
                 {
-                    if (instructions.get(j).contains(textField.getText()))
+                    if (ingredients.get(j).getIngredient().toLowerCase().contains(search))
                     {
                         Todisplay.add(recipes.get(i));
                         break;
                     }
                 }
             }
+            searching=true;
+            System.out.println(Todisplay);
             displayRecipes(Todisplay);
         }
         else
         {
             startSearch();
         }
-
-
+    }
+    @FXML
+    void Homebtn()
+    {
+        Todisplay.clear();
+        searching=false;
+        mainmenu.getChildren().clear();
+        scroll1.setVisible(true);
+        scroll2.setVisible(false);
+        untag();
+        up();
+        displayRecipes(recipes);
+    }
+    void untag()
+    {
+        checkBoxhealthy.setSelected(false);
+        checkBoxprice.setSelected(false);
+        checkBoxpop.setSelected(false);
+        checkBoxTime.setSelected(false);
     }
 }
 

@@ -27,6 +27,7 @@ import java.util.*;
 
 
 public class FoodAppController implements Initializable {
+    boolean textfieldshown=false;
     List<Recipe> recipes;
     Label requirementslabl=new Label();
     Label instructionslabl=new Label();
@@ -70,6 +71,7 @@ public class FoodAppController implements Initializable {
         {
             searchAnchor.setScaleX(0);
             searchAnchor.setScaleY(0);
+            textfieldshown=false;
         }
         else
             textField.setText("");
@@ -92,9 +94,9 @@ public class FoodAppController implements Initializable {
         scaleTransition.setToX(1);
         scaleTransition.play();
     }
-    @FXML
     void startSearch()
     {
+        textfieldshown=true;
         ScaleTransition scaleTransition=new ScaleTransition(Duration.seconds(0.2),searchAnchor);
         scaleTransition.setToY(1);
         scaleTransition.setToX(1);
@@ -151,14 +153,14 @@ public class FoodAppController implements Initializable {
     }
     void displayRecipes(List<Recipe> recipes)
     {
-        for (int j=0;j<20;j+=4)
+        for (int j=0;j<20&&j<recipes.size();j+=4)
         {
             HBox hBox =new HBox();
             hBox.setAlignment(Pos.CENTER);
             hBox.setPrefHeight(205);
             hBox.setMinHeight(205);
             hBox.setSpacing(50);
-            for (int i=j;i<j+4&& i<100;i++)
+            for (int i=j;i<j+4&& i<recipes.size();i++)
             {
                 int k=i;
                 VBox item=recipes.get(i).Item();
@@ -350,7 +352,41 @@ public class FoodAppController implements Initializable {
         else
             displayRecipes(recipes);
     }
+    @FXML
+    void globalsearch()
+    {
+        System.out.println(textfieldshown);
+        if (textfieldshown && textField.getText()!="")
+        {
+            mainmenu.getChildren().clear();
+            List<Recipe> Todisplay=new ArrayList<>();
+            String search=textField.getText();
+            for (int i=0;i<recipes.size();i++)
+            {
+                if (recipes.get(i).name.contains(search))
+                {
+                    Todisplay.add(recipes.get(i));
+                    break;
+                }
+                List<String> instructions=recipes.get(i).getInstructions();
+                for (int j=0;j<instructions.size();j++)
+                {
+                    if (instructions.get(j).contains(textField.getText()))
+                    {
+                        Todisplay.add(recipes.get(i));
+                        break;
+                    }
+                }
+            }
+            displayRecipes(Todisplay);
+        }
+        else
+        {
+            startSearch();
+        }
 
+
+    }
 }
 
 

@@ -175,7 +175,7 @@
                                     <Font name="Georgia Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="492.0" layoutY="30.0" mnemonicParsing="false" onAction="#startSearch" prefHeight="22.0" prefWidth="38.0" styleClass="searchbtn" stylesheets="@style.css">
+                              <Button layoutX="492.0" layoutY="30.0" mnemonicParsing="false" onAction="#globalsearch" prefHeight="22.0" prefWidth="38.0" styleClass="searchbtn" stylesheets="@style.css">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="searchbtn">
                                        <image>
